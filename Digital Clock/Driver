@@ -1,0 +1,11 @@
+package Swing;
+
+public class Driver {
+
+	public static void main(String[] args) {
+		Digital_Clock obj=new Digital_Clock();
+	     obj.StartClock();
+
+	}
+
+}
