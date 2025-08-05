@@ -1,0 +1,71 @@
+package Swing;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import javax.swing.Timer;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+public class Digital_Clock extends JFrame {
+
+	
+	private JLabel clocklabel;
+	private boolean toggleColor=false;
+	public Digital_Clock() 
+	{
+		clocklabel =new JLabel();
+		clocklabel.setHorizontalAlignment(SwingConstants.CENTER);
+		clocklabel.setVerticalAlignment(SwingConstants.CENTER);
+		clocklabel.setFont(new Font("Arial",Font.BOLD,35));
+		clocklabel.setBackground(Color.BLACK);
+		clocklabel.setOpaque(true);
+		clocklabel.setForeground(Color.GREEN);
+		
+		add(clocklabel);
+		setTitle("MY Clock");
+		setSize(400,400);
+		setLocation(400,100);
+		setVisible(true);
+		
+	}
+     public void StartClock()
+     {
+    	 Timer time=new Timer(1000,new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Date now=new Date();
+				 String dateTime = new SimpleDateFormat("HH:mm:ss").format(now);
+			     String dayStr = new SimpleDateFormat("EEEE").format(now);         // Day
+	             String dateStr = new SimpleDateFormat("dd-MMM-yyyy").format(now);
+	             
+	             String fulltext="<html>"+dateTime+"<br>"+dayStr+"<br>"+dateStr+"</html>";
+			      clocklabel.setText(fulltext); 
+			      
+			        Toolkit.getDefaultToolkit().beep();
+
+	               
+	                if (toggleColor) {
+	                    clocklabel.setForeground(Color.GREEN);
+	                } else {
+	                    clocklabel.setForeground(Color.RED);
+	                }
+	                toggleColor = !toggleColor;
+	            }
+				
+		});
+    	 time.start();
+    	 
+     }
+      
+		
+	}
+
+
