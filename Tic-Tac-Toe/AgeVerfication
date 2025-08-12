@@ -1,0 +1,85 @@
+package Swing;
+import javax.swing.*;
+import javax.swing.event.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class AgeVerfication implements ChangeListener, ActionListener {
+
+    JFrame frame;
+    JLabel label;
+    JPanel panel;
+    JSlider slider;
+    JButton button;
+
+    public AgeVerfication() {
+        frame = new JFrame("Age Verification");
+        label = new JLabel();
+        panel = new JPanel();
+        slider = new JSlider(0, 100, 18);
+        button = new JButton("Enter");
+        button.setForeground(Color.WHITE);
+
+        slider.setPreferredSize(new Dimension(250, 80));
+        slider.setPaintTicks(true);
+        slider.setMinorTickSpacing(10);
+
+        slider.setPaintTrack(true);
+        slider.setMajorTickSpacing(25);
+
+        slider.setPaintLabels(true);
+        slider.setFont(new Font("MV Boli", Font.PLAIN, 15));
+        slider.setForeground(Color.red);
+      
+        UIManager.put("Slider.thumb", new Color(255, 0, 0));  // Red thumb
+        UIManager.put("Slider.track", new Color(0, 255, 0));  // Green track
+        SwingUtilities.updateComponentTreeUI(frame);          // Apply changes
+
+
+        slider.addChangeListener(this);
+        button.addActionListener(this);  // Add listener for button clicks
+
+        label.setFont(new Font("Arial", Font.BOLD, 25));
+        label.setText("Age: " + slider.getValue());
+        button.setBackground(Color.BLACK);
+        panel.add(slider);
+        panel.add(label);
+         
+        frame.setLayout(new FlowLayout()); // So button and panel layout nicely
+        frame.add(panel);
+        frame.add(button);
+        
+        
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(800, 800);
+        frame.setVisible(true);
+
+        updateButtonState();  // Enable/disable button initially
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        label.setText("Age: " + slider.getValue());
+        updateButtonState();
+    }
+
+    private void updateButtonState() {
+        if (slider.getValue() >= 18) {
+            button.setEnabled(true);
+            label.setForeground(Color.GREEN.darker());
+        } else {
+            button.setEnabled(false);
+            label.setForeground(Color.RED);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (slider.getValue() >= 18) {
+            new Tic_Tac_Toe();
+            frame.dispose();// Launch the Tic Tac Toe game window
+        } else {
+            JOptionPane.showMessageDialog(frame, "You must be at least 18 years old to enter.", "Access Denied", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+}
