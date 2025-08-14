@@ -1,0 +1,91 @@
+package Swing;
+
+import java.awt.FileDialog;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+
+public class FunctioFile {
+    GUI gui;
+    String fileName;
+    String fileAdress;
+	public FunctioFile(GUI gui) {
+		this.gui=gui;
+	}
+     
+	public void newFile()
+	{
+		gui.textarea.setText(" ");
+		gui.setTitle("New");
+		fileName=null;
+		fileAdress=null;
+	}
+	
+	public void openFile()
+	{
+		FileDialog fd=new FileDialog(gui,"Open",FileDialog.LOAD);
+		fd.setVisible(true);
+		
+		if(fd.getFile()!=null)
+		{
+			fileName=fd.getFile();
+			fileAdress=fd.getDirectory();
+			
+			gui.setTitle(fileName);
+		}
+		System.out.println("Opened file name and address:"+fileName+fileAdress);
+		try {
+			 BufferedReader br=new BufferedReader(new FileReader(fileAdress+fileName));// need file address read file
+			 gui.textarea.setText("");
+			 String line=null;
+			 while((line=br.readLine())!=null)
+			 {
+				 gui.textarea.append(line+"\n");
+			 }
+			 br.close();
+		} catch (Exception e) {
+			System.out.println("Error in text file!");
+		}
+		
+	}
+	public void saveFile()
+	{
+		if(fileName==null)
+			saveAsFile();
+		else
+			
+		{
+			try {
+				  FileWriter fw=new FileWriter(fileAdress+fileName);
+				  fw.write(gui.textarea.getText());
+				  gui.setTitle(fileName);
+				  fw.close();
+			} catch (Exception e) {
+				System.out.println("Somthing is wrong!");
+			}
+		}
+	}
+	public void saveAsFile()
+	{
+		FileDialog fd=new FileDialog(gui,"Save",FileDialog.SAVE);
+		fd.setVisible(true);
+		if(fd.getFile()!=null)
+		{
+			fileName=fd.getFile();
+			fileAdress=fd.getDirectory();
+			
+			gui.setTitle(fileName);
+		}
+		try {
+			FileWriter wr=new FileWriter(fileAdress+fileName);
+			wr.write(gui.textarea.getText());
+			wr.close();
+		} catch (Exception e) {
+			System.out.println("Somthing is wrong!");
+		}
+	}
+	public void exitFile()
+	{
+			System.exit(0);
+	}
+}
