@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "LeaveManagement": {
+      "command": "C:\\Users\\Admin\\PyCharmMiscProject\\.venv/Scripts\\uv.EXE",
+      "args": [
+        "run",
+        "--with",
+        "mcp[cli]",
+        "mcp",
+        "run",
+        "C:\\Users\\Admin\\PyCharmMiscProject\\my-mcp-server\\main.py"
+      ]
+    }
+}
+}
